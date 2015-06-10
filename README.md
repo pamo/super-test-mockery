@@ -2,22 +2,12 @@
 Needed a simple example of how to use [Mockery](https://github.com/mfncooper/mockery) to mock a service that gets called when we make a request to an API endpoint.
 Using the [Mocha](http://mochajs.org) unit testing framework, and [Supertest](https://github.com/visionmedia/supertest) to assert on http requests.
 
-The test should fail to show that the mock is being used and not the actual service.
-```sh
-GET /greet
-    1) respond with json
+The tests in test/server.test.js have 3 examples:
+* Mocked service
+* Real service
+* Re-mocked service with a different mock
 
-
-  0 passing (166ms)
-  1 failing
-
-  1) GET /greet respond with json:
-
-      Error: expected { message: 'Hello, pam!' } response body, got { message: 'WTF!' }
-      + expected - actual
-
-       {
-      -  "message": "WTF!"
-      +  "message": "Hello, pam!"
-       }
-```
+It seems that in order to work 
+1. Register a mock with Mockery 
+2. Enable Mockery
+3. Re-require the modules that are under test so that the modules to mock are intercepted by mockery when they are required in the modules under test.
